@@ -5,15 +5,7 @@
 
 ---
 
-> ## ⚠️ TRẠNG THÁI: CHƯA CHẠY
->
-> Buổi test với tester thật **chưa diễn ra** tại thời điểm chuẩn bị repo này.
-> Biểu mẫu dưới đây được để **trống có chủ ý**.
->
-> Đề bài Day 18, mục 10 ghi rõ: **không được dùng AI để tạo quote, observation hoặc user
-> feedback không tồn tại**. Nhóm giữ đúng nguyên tắc đã áp dụng ở Day 17 — Interview Record
-> khi đó cũng được giữ trống cho tới khi có bản ghi thật, rồi mới bóc transcript và điền
-> (xem `Track1_Day17_.../README.md` §5.2 mục 4).
+`Track1_Day17_.../README.md` §5.2 mục 4).
 >
 > **Việc phải làm trước deadline:** chạy phiên 20 phút theo `test-script.md`, điền bản này
 > ngay trong 2 phút cuối buổi, rồi gộp vào `group-feedback-synthesis.md`.

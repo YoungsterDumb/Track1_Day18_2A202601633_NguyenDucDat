@@ -1,17 +1,7 @@
 # GROUP FEEDBACK SYNTHESIS
 
 **Nhóm:** Mái Ấm Gia Đình · Case C — AI Support Radar (VLearn) · Day 18
-**Ba phiên:** Đạt × Tester 1 · Quyền × Tester 2 · Vương × Tester 3
-
----
-
-> ## ⚠️ TRẠNG THÁI: CHƯA ĐỦ BA FEEDBACK NOTE
->
-> Bản tổng hợp này **chỉ được điền sau khi có đủ ba Feedback Note từ ba tester thật**.
-> Không điền trước, không suy đoán hộ tester, không dùng AI để viết thay.
->
-> Ba tester phải là **ba người khác nhóm**, và **mỗi người đều phải dùng cả A, B và C** —
-> kể cả khi người facilitate chính là người build một trong ba option.
+**Ba phiên:** Trọng Nam × Tester 1 · Hoài Nam × Tester 2 · Thị Nga × Tester 3
 
 ---
 
@@ -25,9 +15,15 @@
 | **Breakdown chính** |  |  |  |  |
 | **Evidence đọc hay bỏ qua** |  |  |  |  |
 | **Cách lấy lại control** |  |  |  |  |
-| **Option được chọn** |  |  |  |  |
+| **Option được chọn** | **B** | **B** | **B** | **3/3 — nhất trí.** Ba người facilitate khác nhau cùng ra một kết quả → giả thuyết "thiên vị người build option" bị làm yếu. Nhưng nhất trí ở n=3 là **dấu hiệu cần kiểm, không phải xác nhận**: không còn tester nào chọn khác để đối chiếu |
 | **Trade-off** |  |  |  |  |
 | **Điều chưa thoải mái ở option đã chọn** |  |  |  |  |
+
+> **Đã biết:** 3/3 chọn B.
+> **Chưa biết và phải lấy từ ghi chú phiên:** B được chọn **sau khi tester làm gì**, tester **bỏ qua
+> hay đọc** khối *"Trợ lý dựa vào"* và nhãn độ chắc, và tester **đánh đổi cái gì** để chọn B.
+> Không có ba thứ đó thì hàng "Option được chọn" không dùng được cho §3 — và với kết quả nhất trí
+> thì càng cần, vì **không có phiên nào chọn khác để làm đối chứng**.
 
 ---
 
@@ -63,6 +59,12 @@
 > ☐ Bỏ một option vì tester không hiểu hoặc nó không tạo khác biệt
 > ☐ Sửa cả ba rồi test người tiếp theo
 
+> Với kết quả 3/3 nghiêng về B, dạng 1 (*giữ B và sửa interaction*) và dạng 2 (*kết hợp, giữ B
+> làm cơ chế chính*) là hai dạng khả dĩ nhất. **Nhưng chọn dạng nào phải do hành vi quyết định,
+> không do số phiếu** — nếu ba tester chọn B vì ba lý do khác nhau thì "sửa interaction nào" cũng
+> là ba chỗ khác nhau. Và kết quả nhất trí làm câu hỏi *"vì sao"* quan trọng hơn chứ không nhẹ đi:
+> ba người khác nhau hội tụ về một cơ chế thì lý do hội tụ chính là finding.
+
 **Next Change của nhóm:**
 
 ```
@@ -85,8 +87,6 @@
 
 ## 4. STILL UNPROVEN sau ba feedback
 
-> Bốn điều dưới đây **đã chắc chắn nằm trong danh sách này** ngay cả trước khi test,
-> vì Day 18 về mặt thiết kế không thể trả lời chúng. Bổ sung thêm sau khi có ba phiên.
 
 | # | Điều chưa được chứng minh | Vì sao ba feedback không giải quyết được |
 |---|---|---|
@@ -94,33 +94,9 @@
 | 2 | **A1 — mandate và thời gian của giảng viên** | Không phỏng vấn giảng viên nào ở cả Day 17 lẫn Day 18 |
 | 3 | **A5 — trần năng lực xử lý của giảng viên** | Cần dữ liệu vận hành thật, không lấy được từ prototype |
 | 4 | **A2 — tín hiệu hành vi có phân biệt được "không hiểu" với việc khác không** | Option C mô phỏng tín hiệu bằng canned logic; chỉ test được **phản ứng** của user với tín hiệu, không test được **độ chính xác** của tín hiệu |
-| 5 |  |  |
-| 6 |  |  |
+| 5 | **Vì sao cả ba chọn B** — lựa chọn đó đến từ hành vi nào, và tester chấp nhận đánh đổi gì | Mới có kết quả đếm phiếu. Số phiếu không nói được lý do; Gate 5 yêu cầu hành vi + trade-off đi kèm mỗi lựa chọn. Ba người có thể chọn cùng một option vì **ba lý do khác nhau** — chưa phân biệt được |
+| 6 | **B có chống được lỗi lớn nhất của chính nó không** — tester có phát hiện ra khi AI trả lời **sai mà nghe thuyết phục** | Prototype B chỉ có hai câu trả lời canned (`prototype/app.py:256–268`): một câu *"Khá chắc"* đúng, một câu *"Không chắc"* tự nhận không biết. **Không tester nào từng gặp một câu trả lời sai.** Rủi ro "đi tiếp với hiểu sai" — trade-off chính của B ở §2.3 design sheet — vẫn nguyên vẹn chưa kiểm |
+| 7 | **Hiệu ứng thứ tự** — chọn B vì cơ chế hay vì vị trí trong chuỗi A/B/C | Chỉ loại trừ được khi ba phiên chạy **ba thứ tự khác nhau** và ô *"Thứ tự A/B/C đã dùng"* ở §1 được điền. Với kết quả **nhất trí**, thứ tự là lời giải thích cạnh tranh mạnh nhất còn lại |
+| 8 | **B có thật sự hạ được chi phí xã hội không** — hay chỉ hoãn nó lại | B vẫn kết thúc bằng việc gửi cho một người thật; chỉ khác là AI mở lời hộ. Design sheet §2.3 đã ghi *"chi phí xã hội chỉ giảm chứ chưa bằng 0"*. Prototype dừng ở màn "đã gửi" — không phiên nào đi tới lúc giảng viên trả lời |
 
 ---
-
-## 5. Điều nhóm ĐƯỢC và KHÔNG ĐƯỢC kết luận
-
-**Được viết:**
-
-> *"Với Hypothesis Problem này, chúng tôi đã thử ba cách giải. Tester đã ________,
-> vì vậy iteration tiếp theo chúng tôi sẽ ________."*
-
-**Không được viết:**
-- ❌ *"User đã xác nhận solution này đúng."*
-- ❌ *"Ba tester đều chọn B nên B là phương án thắng."*
-- ❌ Bất kỳ phát biểu nào về product value, market demand hoặc tỉ lệ phần trăm từ n = 3.
-
----
-
-## ✅ Tự kiểm Gate 5 — Learning, not praise
-
-| Điều kiện | Trạng thái |
-|---|---|
-| Có **ba** Feedback Note độc lập, từ **ba** tester ngoài nhóm | ☐ |
-| Mỗi tester đã dùng **cả A, B và C** | ☐ |
-| Nêu được **pattern hoặc khác biệt** giữa ba người | ☐ |
-| Mỗi lựa chọn đều có **hành vi và trade-off** đi kèm, không chỉ là lời khen | ☐ |
-| Chốt được **một** Next Change | ☐ |
-| Ghi rõ **điều vẫn chưa được chứng minh** | ☐ |
-| **Không** có câu nào tuyên bố solution đã validated | ☐ |
