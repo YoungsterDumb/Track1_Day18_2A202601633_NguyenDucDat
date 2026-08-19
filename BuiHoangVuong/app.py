@@ -2,6 +2,7 @@
 
 from pathlib import Path
 from html import escape
+from typing import Dict
 
 import pandas as pd
 import streamlit as st
@@ -12,6 +13,51 @@ from scoring import get_ranking
 from sync import sync_school_data
 
 DB_PATH = Path(__file__).with_name("students.db")
+
+
+SELECTED_KEY = "selected_student_id"
+OPEN_KEY = "explanation_open"
+
+
+def select_student(student_id: object) -> None:
+    """Button callback: remember which student's explanation to show, and open the panel."""
+    st.session_state[SELECTED_KEY] = int(student_id)
+    st.session_state[OPEN_KEY] = True
+
+
+def clear_selection() -> None:
+    """Close the explanation panel."""
+    st.session_state[SELECTED_KEY] = None
+    st.session_state[OPEN_KEY] = False
+
+
+def _explanation_body(row: Dict[str, object], rank: int) -> None:
+    """Shared panel content, rendered inside either a modal or the sidebar."""
+    st.markdown(f"**{row['name']}** · ID {row['student_id']} · rank #{rank}")
+    st.write(f"Average score: {row['avg_score']}/10 | Trend: {row['score_trend']:+.2f} per assessment")
+    st.write(f"Failed assessments: {row['failed_count']} | Logins in last 7 days: {row['logins_7d']}")
+    st.info(explain(row, rank))
+
+
+if hasattr(st, "dialog"):  # Streamlit >= 1.37
+
+    @st.dialog("Why this rank?")
+    def _explanation_dialog(row: Dict[str, object], rank: int) -> None:
+        _explanation_body(row, rank)
+
+    def show_explanation(row: Dict[str, object], rank: int) -> None:
+        """Open the modal once per click; Streamlit's own ✕ / Esc dismisses it."""
+        if st.session_state.pop(OPEN_KEY, False):
+            _explanation_dialog(row, rank)
+
+else:  # Fallback for Streamlit 1.31-1.36, which has no modal API
+
+    def show_explanation(row: Dict[str, object], rank: int) -> None:
+        """Render the explanation in a persistent side panel."""
+        with st.sidebar:
+            st.markdown('<div class="section-label">Why this rank?</div>', unsafe_allow_html=True)
+            _explanation_body(row, rank)
+            st.button("Close", use_container_width=True, on_click=clear_selection)
 
 
 def color_risk(value: object) -> str:
@@ -108,6 +154,11 @@ button:hover { transform: translateY(-1px); border-color: var(--gold) !important
 [data-testid="stExpander"] { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); margin-bottom: .65rem; transition: border-color .2s, background .2s; }
 [data-testid="stExpander"]:hover { border-color: rgba(212,175,55,.55); background: var(--panel-soft); }
 [data-testid="stExpander"] summary p { color: var(--text) !important; font-size: .88rem; font-weight: 650; }
+/* Explanation modal: inherit the dashboard palette instead of Streamlit's default light surface. */
+[data-testid="stDialog"] div[role="dialog"] { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); color: var(--text); }
+[data-testid="stDialog"] div[role="dialog"] h2 { color: var(--text) !important; font-family: var(--display); font-size: 1.25rem; }
+[data-testid="stDialog"] [data-testid="stAlert"] { border: 1px solid var(--line); background: var(--panel-soft); color: var(--text); }
+[data-testid="stDialog"] [data-testid="stAlert"] p { color: var(--text) !important; }
 [data-testid="stRadio"] label { color: var(--muted) !important; }
 [data-testid="stDownloadButton"] button { width: 100%; }
 [data-testid="stAlert"] { border-radius: 10px; border: 1px solid var(--line); }
@@ -220,6 +271,7 @@ with sync_col:
     if st.button("Sync school data  →", use_container_width=True, type="primary"):
         mix = sync_school_data(DB_PATH)
         st.session_state["ranking"] = get_ranking(DB_PATH)
+        clear_selection()
         st.success(f"Synced 50 students ({mix['high']} high / {mix['mid']} mid / {mix['low']} low risk profiles).")
 with score_col:
     if st.button("Recalculate risk scores", use_container_width=True):
@@ -229,6 +281,7 @@ with score_col:
                 st.warning("The database is empty. Sync school data first.")
             else:
                 st.session_state["ranking"] = ranking
+                clear_selection()
         except (OSError, ValueError, RuntimeError) as error:
             st.error(f"Could not calculate scores: {error}")
 
@@ -247,8 +300,10 @@ else:
             st.markdown(f'<div class="metric-card {tone}"><div class="metric-value">{value}</div><div class="metric-label">{label} · {hint}</div></div>', unsafe_allow_html=True)
 
     st.markdown('<div class="section-label">Live ranking · students needing attention</div>', unsafe_allow_html=True)
+    category = st.radio("Filter", ["All", "High Risk", "Medium Risk", "Low Risk"], horizontal=True)
+    shown = ranking if category == "All" else ranking[ranking["risk_category"] == category]
     card_cols = st.columns(3)
-    for position, (_, row) in enumerate(ranking.iterrows()):
+    for position, (_, row) in enumerate(shown.iterrows()):
         tone = str(row["risk_category"]).split()[0].lower()
         rank = int(ranking.index[ranking["student_id"] == row["student_id"]][0]) + 1
         card = (
@@ -263,16 +318,19 @@ else:
         )
         with card_cols[position % 3]:
             st.markdown(card, unsafe_allow_html=True)
+            st.button(
+                "Why this rank?  →",
+                key=f"why_{row['student_id']}",
+                use_container_width=True,
+                on_click=select_student,
+                args=(row["student_id"],),
+            )
 
     st.download_button("Download complete ranking · CSV", ranking.to_csv(index=False).encode("utf-8"), "student_risk_ranking.csv", "text/csv")
 
-    st.markdown('<div class="section-label">Why this rank?</div>', unsafe_allow_html=True)
-    category = st.radio("Filter", ["All", "High Risk", "Medium Risk", "Low Risk"], horizontal=True)
-    shown = ranking if category == "All" else ranking[ranking["risk_category"] == category]
-    limit = st.slider("Students to explain", 1, max(len(shown), 1), min(10, max(len(shown), 1)))
-    for _, row in shown.head(limit).iterrows():
-        rank = int(ranking.index[ranking["student_id"] == row["student_id"]][0]) + 1
-        with st.expander(f"#{rank} · {row['name']} — {row['risk_category']} ({row['risk_score']}/100)"):
-            st.write(f"Average score: {row['avg_score']}/10 | Trend: {row['score_trend']:+.2f} per assessment")
-            st.write(f"Failed assessments: {row['failed_count']} | Logins in last 7 days: {row['logins_7d']}")
-            st.info(explain(row.to_dict(), rank))
+    selected = st.session_state.get(SELECTED_KEY)
+    match = ranking[ranking["student_id"] == selected] if selected is not None else ranking.iloc[0:0]
+    if selected is not None and match.empty:
+        clear_selection()  # the student vanished after a re-sync
+    elif not match.empty:
+        show_explanation(match.iloc[0].to_dict(), rank=int(match.index[0]) + 1)
