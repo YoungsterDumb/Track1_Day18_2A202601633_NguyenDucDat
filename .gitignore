@@ -1,0 +1,8 @@
+# môi trường ảo Python — không đưa vào repo nộp bài
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+.streamlit/secrets.toml
+GUIDE.md
