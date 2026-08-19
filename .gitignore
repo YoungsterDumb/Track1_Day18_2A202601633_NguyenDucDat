@@ -6,3 +6,12 @@ __pycache__/
 *.pyc
 .streamlit/secrets.toml
 GUIDE.md
+
+# prototype BuiHoangVuong — dữ liệu chạy & artefact build
+**/__pycache__/
+**/*.pyc
+*.db
+*.db-journal
+*.db-wal
+BuiHoangVuong/students.db
+data/
