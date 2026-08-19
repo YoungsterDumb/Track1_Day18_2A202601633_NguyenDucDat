@@ -16,7 +16,7 @@
 
 | # | Họ tên | MHV | Option chịu trách nhiệm chính |
 |---|---|---|---|
-| 1 | **Nguyễn Đức Đạt** | 2A202601633 | **Option A** + shared context / content fixture / shared components |
+| 1 | **Nguyễn Đức Đạt** | 2A202601633 | **Option A** |
 | 2 | La Thế Quyền | 2A202601699 | **Option B** |
 | 3 | Bùi Hoàng Vương | 2A202601553 | **Option C** |
 
