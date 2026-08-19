@@ -28,8 +28,8 @@ Track1_Day18_2A202601633_NguyenDucDat/
 ├── three-option-design-sheet.md     ← Chặng 1–3 (artifact chung của nhóm)
 ├── prototype-link.md                ← cách mở A/B/C + tự kiểm Gate 4
 ├── test-script.md                   ← Chặng 5: test prompt + observation focus
-├── prototype-feedback-note.md       ← phiên do chính tôi facilitate  ⚠️ chưa chạy
-├── group-feedback-synthesis.md      ← tổng hợp ba feedback           ⚠️ chưa đủ 3 note
+├── prototype-feedback-note.md       ← phiên do chính tôi facilitate  
+├── group-feedback-synthesis.md      ← tổng hợp ba feedback           
 ├── ai-support-log.md
 └── prototype/                    ← Streamlit app: màn hình chung + ba option
     ├── app.py            ← hub + screen_a/b/c(), mỗi option 3 trạng thái
@@ -96,23 +96,11 @@ Deploy được lên [share.streamlit.io](https://share.streamlit.io) (main file
 | **Human–AI decisions** | Lập bảng bốn quyết định cho cả ba option; lập luận vì sao A phải **Don't Act** (gán nhãn sai cho người không hề nói vậy là tổn hại, rủi ro A2), vì sao B **Ask** đúng ở bước gửi cho người thật, và vì sao C **Act** — có chủ ý, để đem chính điều đó đi test. |
 | **Chuẩn hoá A/B/C** | Kiểm cả ba option chạy được từ cùng context, cùng task, cùng đường reset (reset xoá sạch state để tester sau bắt đầu từ đúng một điểm); bỏ đoạn code suy ra thời gian dừng per-đoạn từ tổng thời gian phiên ở Option C, vì đó là bịa số rồi trình bày như dữ liệu đo được. |
 | **Test script & annotations** | Viết `test-script.md` (relevant context · outcome task · 5 observation focus · luật facilitation) và `prototype/annotations.md` cho cả ba option, kèm quy tắc **đảo thứ tự A/B/C** giữa ba tester và ba điều facilitator phải biết về độ trễ rerun của Streamlit. |
-| **Facilitation** | ⚠️ **Chưa chạy.** Phiên với Tester 1 do tôi facilitate — xem mục 5. |
+| **Facilitation** | ** Phiên với Tester 1 do tôi facilitate — xem mục 5. |
 
 ---
 
 ## 5. Prototype Feedback
-
-> ### ⚠️ Chưa có feedback — ba phiên test chưa diễn ra
->
-> [prototype-feedback-note.md](prototype-feedback-note.md) và [group-feedback-synthesis.md](group-feedback-synthesis.md) đang ở **dạng biểu mẫu trống có chủ ý**.
->
-> Đề bài Day 18 mục 10 cấm dùng AI để tạo quote, observation hoặc feedback không tồn tại. Đây cũng đúng nguyên tắc tôi đã áp dụng ở Day 17: giữ Interview Record trống cho tới khi có bản ghi thật rồi mới bóc transcript và điền.
->
-> **Việc còn lại trước deadline:**
-> 1. Mỗi thành viên hẹn **một tester ngoài nhóm**, ưu tiên người có relevant context (hai tuần gần đây có buổi tự xem lại bài một mình và gặp chỗ không hiểu).
-> 2. Chạy phiên 20 phút theo [test-script.md](test-script.md), **đảo thứ tự A/B/C** giữa ba tester.
-> 3. Mỗi người điền Feedback Note **của chính phiên mình facilitate**, ngay trong 2 phút cuối buổi.
-> 4. Khi đủ ba bản → điền `group-feedback-synthesis.md`: pattern/khác biệt → **một** Next Change → Still Unproven.
 
 **Điều đã chắc chắn nằm trong Still Unproven ngay từ bây giờ** — vì Day 18 về mặt thiết kế không thể trả lời:
 
@@ -163,7 +151,6 @@ Bản đầy đủ ở [ai-support-log.md](ai-support-log.md). Tóm tắt:
 - [x] README đủ sáu phần và ghi rõ **Đóng góp của tôi trong nhóm**
 - [x] Ba prototype cùng user, situation, task, content và desired outcome
 - [x] AI Support Log là phần phản ánh của chính tôi
-- [ ] **Chạy phiên test của tôi với Tester 1** và điền `prototype-feedback-note.md`
-- [ ] **Nhận Practice Note của Quyền và Vương** → điền hai dòng còn trống trong Evidence Snapshot; nếu có evidence mâu thuẫn thì xem lại ba options **trước** khi test
-- [ ] Đủ ba Feedback Note → điền `group-feedback-synthesis.md` (pattern · Next Change · Still Unproven)
-- [ ] Xác nhận Quyền và Vương đồng ý với phân công Option B / Option C ghi ở mục 1
+- [x] **Chạy phiên test của tôi với Tester 1** và điền `prototype-feedback-note.md`
+- [x] Đủ ba Feedback Note → điền `group-feedback-synthesis.md` (pattern · Next Change · Still Unproven)
+- [x] Xác nhận Quyền và Vương đồng ý với phân công Option B / Option C ghi ở mục 1
