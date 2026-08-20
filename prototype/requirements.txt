@@ -1,2 +1,0 @@
-streamlit>=1.40
-# Python 3.9+ (đã chạy thử trên 3.11 và 3.12)
